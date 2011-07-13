@@ -14,7 +14,7 @@
 #
 # This class file is not called directly
 class nginx::package::debian {
-  package { 'nginx':
+  package { 'nginx-light':
     ensure => present,
   }
 }
