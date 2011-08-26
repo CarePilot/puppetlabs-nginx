@@ -17,4 +17,12 @@ class nginx::package::debian {
   package { 'nginx':
     ensure => present,
   }
+  file { '/etc/nginx/fastcgi_params':
+    ensure => present,
+    source => "puppet:///modules/nginx/files/fastcgi_params",
+    owner  => root,
+    group  => root,
+    mode   => 0644,
+    notify => Package['nginx'],
+  }
 }
