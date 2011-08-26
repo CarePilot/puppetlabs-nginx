@@ -23,6 +23,6 @@ class nginx::package::debian {
     owner  => root,
     group  => root,
     mode   => 0644,
-    notify => Package['nginx'],
+    notify => Service['nginx'],
   }
 }
