@@ -20,13 +20,26 @@ http {
   <% if scope.lookupvar('nginx::params::nx_tcp_nopush' == 'on') %>
   tcp_nopush  on;
   <% end %>
+  <% if scope.lookupvar('nginx::params::nx_tcp_nodelay' == 'on') %>
+  tcp_nodelay  on;
+  <% end %>
 
   keepalive_timeout  <%= scope.lookupvar('nginx::params::nx_keepalive_timeout')%>;
   tcp_nodelay        <%= scope.lookupvar('nginx::params::nx_tcp_nodelay')%>;
 
   <% if scope.lookupvar('nginx::params::nx_gzip' == 'on') %>
   gzip         on;
+  gzip_types       text/plain application/xml text/css application/x-javascript image/svg+xml;
   gzip_disable "MSIE [1-6]\.(?!.*SV1)";
+  <% end %>
+
+  expires 1w;
+
+  <% if scope.lookupvar('nginx::params::nx_always_https' == 'on') %>
+  server {
+     listen 80;
+     rewrite ^(.*) https://$host$1 permanent;
+  }
   <% end %>
 
   include /etc/nginx/conf.d/*.conf;
