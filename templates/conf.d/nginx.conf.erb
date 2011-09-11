@@ -14,16 +14,9 @@ http {
   default_type  application/octet-stream;
 
   access_log  <%= scope.lookupvar('nginx::params::nx_logdir')%>/access.log;
-
   sendfile    <%= scope.lookupvar('nginx::params::nx_sendfile')%>;
 
-  <% if scope.lookupvar('nginx::params::nx_tcp_nopush' == 'on') %>
-  tcp_nopush  on;
-  <% end %>
-  <% if scope.lookupvar('nginx::params::nx_tcp_nodelay' == 'on') %>
-  tcp_nodelay  on;
-  <% end %>
-
+  tcp_nopush         <%= scope.lookupvar('nginx::params::nx_tcp_nopush') %>;
   keepalive_timeout  <%= scope.lookupvar('nginx::params::nx_keepalive_timeout')%>;
   tcp_nodelay        <%= scope.lookupvar('nginx::params::nx_tcp_nodelay')%>;
 
