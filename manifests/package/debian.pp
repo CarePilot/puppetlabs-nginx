@@ -14,7 +14,7 @@
 #
 # This class file is not called directly
 class nginx::package::debian {
-  file { 'nginx backports'
+  file { 'nginx backports':
     path => '/etc/apt/preferences.d/nginx',
     ensure => present,
     content => "Package: nginx-full
