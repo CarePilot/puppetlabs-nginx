@@ -35,18 +35,18 @@ Pin-Priority: 600
   file { $geo_root:
     ensure => directory,
   }
-  exec { 'geoip':
-    command => "wget http://geolite.maxmind.com/download/geoip/database/GeoLiteCountry/GeoIP.dat.gz && gunzip GeoIP.dat.gz",
-    cwd => $geo_root,
-    creates => "${geo_root}/GeoIP.dat",
-    require => File[$geo_root],
-  }
-  exec { 'geoiplite':
-    command => "wget http://geolite.maxmind.com/download/geoip/database/GeoLiteCity.dat.gz && gunzip GeoLiteCity.dat.gz",
-    cwd => $geo_root,
-    creates => "${geo_root}/GeoLiteCity.dat",
-    require => File[$geo_root],
-  }
+  # exec { 'geoip':
+  #   command => "wget http://geolite.maxmind.com/download/geoip/database/GeoLiteCountry/GeoIP.dat.gz && gunzip GeoIP.dat.gz",
+  #   cwd => $geo_root,
+  #   creates => "${geo_root}/GeoIP.dat",
+  #   require => File[$geo_root],
+  # }
+  # exec { 'geoiplite':
+  #   command => "wget http://geolite.maxmind.com/download/geoip/database/GeoLiteCity.dat.gz && gunzip GeoLiteCity.dat.gz",
+  #   cwd => $geo_root,
+  #   creates => "${geo_root}/GeoLiteCity.dat",
+  #   require => File[$geo_root],
+  # }
 
 #   file { "${geo_root}/GeoIP.dat":
 #     ensure => present,
