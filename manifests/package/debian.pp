@@ -17,7 +17,7 @@ class nginx::package::debian {
   file { 'nginx backports':
     path => '/etc/apt/preferences.d/nginx',
     ensure => present,
-    content => "Package: nginx-full
+    content => "Package: nginx-full nginx-common
 Pin: release a=squeeze-backports
 Pin-Priority: 600
     ",
