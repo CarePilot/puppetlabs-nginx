@@ -32,9 +32,7 @@ Pin-Priority: 600
   }
 
   $geo_root = '/etc/nginx/geoip'
-  file { $geo_root:
-    ensure => directory,
-  }
+  exec { "mkdir ${geo_root}": }
   # exec { 'geoip':
   #   command => "wget http://geolite.maxmind.com/download/geoip/database/GeoLiteCountry/GeoIP.dat.gz && gunzip GeoIP.dat.gz",
   #   cwd => $geo_root,
