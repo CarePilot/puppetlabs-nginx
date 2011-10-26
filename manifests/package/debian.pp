@@ -14,49 +14,52 @@
 #
 # This class file is not called directly
 class nginx::package::debian {
-  file { '/etc/apt/preferences.d/nginx':
+  package { 'nginx':
     ensure => present,
-    content => "Package: nginx-full
-Pin: release a=squeeze-backports
-Pin-Priority: 600
-    ",
   }
+  # package { 'nginx-light':
+  #   ensure => absent,
+  # }
+  # package { 'nginx-full':
+  #   ensure => present,
+  # }
 
-  package { 'nginx-light':
-    ensure => absent,
-  }
-  package { 'nginx-full':
-    ensure => present,
-  }
+#   file { '/etc/apt/preferences.d/nginx':
+#     ensure => present,
+#     content => "Package: nginx-full
+# Pin: release a=squeeze-backports
+# Pin-Priority: 600
+#     ",
+#   }
 
-  $geo_root = '/etc/nginx/geoip'
-  file { $geo_root:
-    ensure => directory,
-  }
-  exec { 'geoip':
-    command => "wget http://geolite.maxmind.com/download/geoip/database/GeoLiteCountry/GeoIP.dat.gz && gunzip GeoIP.dat.gz",
-    cwd => $geo_root,
-    creates => "${geo_root}/GeoIP.dat",
-    require => File[$geo_root],
-  }
-  exec { 'geoiplite':
-    command => "wget http://geolite.maxmind.com/download/geoip/database/GeoLiteCity.dat.gz && gunzip GeoLiteCity.dat.gz",
-    cwd => $geo_root,
-    creates => "${geo_root}/GeoLiteCity.dat",
-    require => File[$geo_root],
-  }
+#   $geo_root = '/etc/nginx/geoip'
+#   file { $geo_root:
+#     ensure => directory,
+#   }
+#   exec { 'geoip':
+#     command => "wget http://geolite.maxmind.com/download/geoip/database/GeoLiteCountry/GeoIP.dat.gz && gunzip GeoIP.dat.gz",
+#     cwd => $geo_root,
+#     creates => "${geo_root}/GeoIP.dat",
+#     require => File[$geo_root],
+#   }
+#   exec { 'geoiplite':
+#     command => "wget http://geolite.maxmind.com/download/geoip/database/GeoLiteCity.dat.gz && gunzip GeoLiteCity.dat.gz",
+#     cwd => $geo_root,
+#     creates => "${geo_root}/GeoLiteCity.dat",
+#     require => File[$geo_root],
+#   }
 
-  file { "${geo_root}/GeoIP.dat":
-    ensure => present,
-    owner  => 'www-data',
-    group  => 'www-data',
-    require => Exec['geoip'],
-  }
-  file { "${geo_root}/GeoLiteCity.dat":
-    ensure => present,
-    owner  => 'www-data',
-    group  => 'www-data',
-    require => Exec['geoiplite'],
-  }
+#   file { "${geo_root}/GeoIP.dat":
+#     ensure => present,
+#     owner  => 'www-data',
+#     group  => 'www-data',
+#     require => Exec['geoip'],
+#   }
+#   file { "${geo_root}/GeoLiteCity.dat":
+#     ensure => present,
+#     owner  => 'www-data',
+#     group  => 'www-data',
+#     require => Exec['geoiplite'],
+#   }
 
 }

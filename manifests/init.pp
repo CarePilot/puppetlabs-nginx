@@ -28,6 +28,11 @@ class nginx {
 
   class { 'stdlib': }
 
+  anchor{ 'nginx::begin':
+    before => Class['nginx::package'],
+    notify => Class['nginx::service'],
+  }
+
   class { 'nginx::package':
     notify => Class['nginx::service'],
   }
@@ -39,4 +44,7 @@ class nginx {
 
   class { 'nginx::service': }
 
+  anchor { 'nginx::end':
+    require => Class['nginx::service'],
+  }
 }
