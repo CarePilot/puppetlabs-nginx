@@ -34,6 +34,7 @@ Pin-Priority: 600
   $geo_root = '/etc/nginx/geoip'
   exec { $geo_root:
     command => "mkdir ${geo_root}",
+    creates => $geo_root,
     require => Package['nginx-full'],
   }
   exec { 'geoip':
@@ -49,17 +50,17 @@ Pin-Priority: 600
     require => Exec[$geo_root],
   }
 
-#   file { "${geo_root}/GeoIP.dat":
-#     ensure => present,
-#     owner  => 'www-data',
-#     group  => 'www-data',
-#     require => Exec['geoip'],
-#   }
-#   file { "${geo_root}/GeoLiteCity.dat":
-#     ensure => present,
-#     owner  => 'www-data',
-#     group  => 'www-data',
-#     require => Exec['geoiplite'],
-#   }
+  file { "${geo_root}/GeoIP.dat":
+    ensure => present,
+    owner  => 'www-data',
+    group  => 'www-data',
+    require => Exec['geoip'],
+  }
+  file { "${geo_root}/GeoLiteCity.dat":
+    ensure => present,
+    owner  => 'www-data',
+    group  => 'www-data',
+    require => Exec['geoiplite'],
+  }
 
 }
