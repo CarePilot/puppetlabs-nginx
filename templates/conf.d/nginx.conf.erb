@@ -13,6 +13,9 @@ http {
   include       /etc/nginx/mime.types;
   default_type  application/octet-stream;
 
+  geoip_country  /etc/nginx/geoip/GeoIP.dat; # the country IP database
+  geoip_city     /etc/nginx/geoip/GeoLiteCity.dat; # the city IP database
+
   access_log  <%= scope.lookupvar('nginx::params::nx_logdir')%>/access.log;
   sendfile    <%= scope.lookupvar('nginx::params::nx_sendfile')%>;
 
