@@ -32,19 +32,22 @@ Pin-Priority: 600
   }
 
   $geo_root = '/etc/nginx/geoip'
-  exec { "mkdir ${geo_root}": }
-  # exec { 'geoip':
-  #   command => "wget http://geolite.maxmind.com/download/geoip/database/GeoLiteCountry/GeoIP.dat.gz && gunzip GeoIP.dat.gz",
-  #   cwd => $geo_root,
-  #   creates => "${geo_root}/GeoIP.dat",
-  #   require => File[$geo_root],
-  # }
-  # exec { 'geoiplite':
-  #   command => "wget http://geolite.maxmind.com/download/geoip/database/GeoLiteCity.dat.gz && gunzip GeoLiteCity.dat.gz",
-  #   cwd => $geo_root,
-  #   creates => "${geo_root}/GeoLiteCity.dat",
-  #   require => File[$geo_root],
-  # }
+  exec { $geo_root:
+    command => "mkdir ${geo_root}",
+    require => Package['nginx-full'],
+  }
+  exec { 'geoip':
+    command => "wget http://geolite.maxmind.com/download/geoip/database/GeoLiteCountry/GeoIP.dat.gz && gunzip GeoIP.dat.gz",
+    cwd => $geo_root,
+    creates => "${geo_root}/GeoIP.dat",
+    require => Exec[$geo_root],
+  }
+  exec { 'geoiplite':
+    command => "wget http://geolite.maxmind.com/download/geoip/database/GeoLiteCity.dat.gz && gunzip GeoLiteCity.dat.gz",
+    cwd => $geo_root,
+    creates => "${geo_root}/GeoLiteCity.dat",
+    require => Exec[$geo_root],
+  }
 
 #   file { "${geo_root}/GeoIP.dat":
 #     ensure => present,
