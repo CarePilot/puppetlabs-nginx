@@ -14,7 +14,18 @@
 #
 # This class file is not called directly
 class nginx::package::debian {
-  package { 'nginx':
+  file { '/etc/apt/preferences.d/nginx':
+    ensure => present,
+    content => "Package: nginx-full
+Pin: release a=squeeze-backports
+Pin-Priority: 600
+    ",
+  }
+
+  package { 'nginx-light':
+    ensure => absent,
+  }
+  package { 'nginx-full':
     ensure => present,
   }
 
