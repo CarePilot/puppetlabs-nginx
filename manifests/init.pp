@@ -11,7 +11,7 @@
 #
 # Requires:
 #  puppetlabs-stdlib - https://github.com/puppetlabs/puppetlabs-stdlib
-#  
+#
 #  Packaged NGINX
 #    - RHEL: EPEL or custom package
 #    - Debian/Ubuntu: Default Install or custom package
@@ -25,15 +25,10 @@
 #   include nginx
 # }
 class nginx {
-  
+
   class { 'stdlib': }
 
-  anchor{ 'nginx::begin': 
-    before => Class['nginx::package'],
-    notify => Class['nginx::service'],
-  }
-  
-  class { 'nginx::package': 
+  class { 'nginx::package':
     notify => Class['nginx::service'],
   }
 
@@ -44,7 +39,4 @@ class nginx {
 
   class { 'nginx::service': }
 
-  anchor { 'nginx::end':
-    require => Class['nginx::service'],
-  }
 }
