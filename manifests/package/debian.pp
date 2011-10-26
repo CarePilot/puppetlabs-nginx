@@ -14,23 +14,22 @@
 #
 # This class file is not called directly
 class nginx::package::debian {
-  package { 'nginx':
+  file { 'nginx backports'
+    path => '/etc/apt/preferences.d/nginx',
     ensure => present,
+    content => "Package: nginx-full
+Pin: release a=squeeze-backports
+Pin-Priority: 600
+    ",
   }
-  # package { 'nginx-light':
-  #   ensure => absent,
-  # }
-  # package { 'nginx-full':
-  #   ensure => present,
-  # }
 
-#   file { '/etc/apt/preferences.d/nginx':
-#     ensure => present,
-#     content => "Package: nginx-full
-# Pin: release a=squeeze-backports
-# Pin-Priority: 600
-#     ",
-#   }
+  package { 'nginx-light':
+    ensure => absent,
+  }
+  package { 'nginx-full':
+    ensure => present,
+    require => [Package['nginx-light'], File['nginx backports']],
+  }
 
 #   $geo_root = '/etc/nginx/geoip'
 #   file { $geo_root:
