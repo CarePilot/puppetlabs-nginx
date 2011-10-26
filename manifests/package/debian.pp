@@ -52,14 +52,10 @@ Pin-Priority: 600
 
   file { "${geo_root}/GeoIP.dat":
     ensure => present,
-    owner  => 'www-data',
-    group  => 'www-data',
     require => Exec['geoip'],
   }
   file { "${geo_root}/GeoLiteCity.dat":
     ensure => present,
-    owner  => 'www-data',
-    group  => 'www-data',
     require => Exec['geoiplite'],
   }
 
