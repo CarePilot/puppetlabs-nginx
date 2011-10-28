@@ -29,8 +29,6 @@ http {
   gzip_disable "MSIE [1-6]\.(?!.*SV1)";
   <% end %>
 
-  expires 1w;
-
   <% if scope.lookupvar('nginx::params::nx_always_https' == 'on') %>
   server {
      listen 80;
