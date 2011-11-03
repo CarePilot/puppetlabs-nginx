@@ -1,18 +1,3 @@
-# Class: nginx::config
-#
-# This module manages NGINX bootstrap and configuration
-#
-# Parameters:
-#
-# There are no default parameters for this class.
-#
-# Actions:
-#
-# Requires:
-#
-# Sample Usage:
-#
-# This class file is not called directly
 class nginx::config inherits nginx::params {
   File {
     owner   => 'root',
@@ -60,15 +45,15 @@ class nginx::config inherits nginx::params {
   }
 
   exec { 'geoip':
-    command => "wget http://geolite.maxmind.com/download/geoip/database/GeoLiteCountry/GeoIP.dat.gz && gunzip GeoIP.dat.gz",
+    command => "wget -o GeoIP.dat.gz 'http://geolite.maxmind.com/download/geoip/database/GeoLiteCountry/GeoIP.dat.gz' && gunzip -f GeoIP.dat.gz",
     cwd => $nx_geo_root,
-    creates => "${geo_root}/GeoIP.dat",
+    creates => "${nx_geo_root}/GeoIP.dat",
     require => File[$nx_geo_root],
   }
   exec { 'geoiplite':
-    command => "wget http://geolite.maxmind.com/download/geoip/database/GeoLiteCity.dat.gz && gunzip GeoLiteCity.dat.gz",
+    command => "wget -o GeoLiteCity.dat.gz 'http://geolite.maxmind.com/download/geoip/database/GeoLiteCity.dat.gz' && gunzip -f GeoLiteCity.dat.gz",
     cwd => $nx_geo_root,
-    creates => "${geo_root}/GeoLiteCity.dat",
+    creates => "${nx_geo_root}/GeoLiteCity.dat",
     require => File[$nx_geo_root],
   }
 
