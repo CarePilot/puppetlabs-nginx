@@ -14,27 +14,19 @@
 #
 # This class file is not called directly
 class nginx::package {
-  anchor { 'nginx::package::begin': }
-  anchor { 'nginx::package::end': }
-
-  case $operatingsystem {
-    centos,fedora,rhel: {
-      class { 'nginx::package::redhat':
-        require => Anchor['nginx::package::begin'],
-        before  => Anchor['nginx::package::end'],
-      }
-    }
-    debian,ubuntu: {
-      class { 'nginx::package::debian':
-        require => Anchor['nginx::package::begin'],
-        before  => Anchor['nginx::package::end'],
-      }
-    }
-    opensuse,suse: {
-      class { 'nginx::package::suse':
-        require => Anchor['nginx::package::begin'],
-        before  => Anchor['nginx::package::end'],
-      }
-    }
+  file { 'nginx backports':
+    path => '/etc/apt/preferences.d/nginx',
+    ensure => present,
+    content => "Package: nginx-full nginx-common
+Pin: release a=squeeze-backports
+Pin-Priority: 600
+    ",
+    notify => Exec['apt-get update'],
   }
+
+  package { 'nginx-full':
+    ensure => present,
+    require => File['nginx backports'],
+  }
+
 }

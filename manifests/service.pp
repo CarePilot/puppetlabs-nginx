@@ -16,16 +16,9 @@
 class nginx::service {
   service { "nginx":
     ensure     => running,
-    enable	   => true,
+    enable     => true,
     hasstatus  => true,
     hasrestart => true,
-  }
-  file { '/etc/nginx/fastcgi_params':
-    ensure => present,
-    source => "puppet:///modules/nginx/fastcgi_params",
-    owner  => root,
-    group  => root,
-    mode   => 0644,
-    notify => Service['nginx'],
+    require    => Class['nginx::config'],
   }
 }

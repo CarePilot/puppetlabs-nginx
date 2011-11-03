@@ -27,21 +27,11 @@ class nginx::params {
   $nx_tcp_nopush         = on
   $nx_gzip               = on
   $nx_always_https       = on
-
-  $nx_proxy_redirect          = off
-  $nx_proxy_set_header        = [
-    'Host $host', 'X-Real-IP $remote_addr',
-    'X-Forwarded-For $proxy_add_x_forwarded_for',
-  ]
+  $nx_geo_root           = "${nx_conf_dir}/geoip"
 
   $nx_client_body_temp_path   = "${nx_run_dir}/client_body_temp"
   $nx_client_body_buffer_size = '128k'
   $nx_client_max_body_size    = '10m'
-  $nx_proxy_temp_path         = "${nx_run_dir}/proxy_temp"
-  $nx_proxy_connect_timeout   = '90'
-  $nx_proxy_send_timeout      = '90'
-  $nx_proxy_read_timeout      = '90'
-  $nx_proxy_buffers           = '32 4k'
 
   $nx_logdir = $kernel ? {
     /(?i-mx:linux)/ => '/var/log/nginx',
