@@ -25,26 +25,5 @@
 #   include nginx
 # }
 class nginx {
-
-  class { 'stdlib': }
-
-  anchor{ 'nginx::begin':
-    before => Class['nginx::package'],
-    notify => Class['nginx::service'],
-  }
-
-  class { 'nginx::package':
-    notify => Class['nginx::service'],
-  }
-
-  class { 'nginx::config':
-    require => Class['nginx::package'],
-    notify  => Class['nginx::service'],
-  }
-
-  class { 'nginx::service': }
-
-  anchor { 'nginx::end':
-    require => Class['nginx::service'],
-  }
+  include nginx::package, nginx::config, nginx::service
 }
