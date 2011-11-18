@@ -45,13 +45,13 @@ class nginx::config inherits nginx::params {
   }
 
   exec { 'geoip':
-    command => "wget -o GeoIP.dat.gz 'http://geolite.maxmind.com/download/geoip/database/GeoLiteCountry/GeoIP.dat.gz' && gunzip -f GeoIP.dat.gz",
+    command => "wget -O GeoIP.dat.gz 'http://geolite.maxmind.com/download/geoip/database/GeoLiteCountry/GeoIP.dat.gz' && gunzip -f GeoIP.dat.gz",
     cwd => $nx_geo_root,
     creates => "${nx_geo_root}/GeoIP.dat",
     require => File[$nx_geo_root],
   }
   exec { 'geoiplite':
-    command => "wget -o GeoLiteCity.dat.gz 'http://geolite.maxmind.com/download/geoip/database/GeoLiteCity.dat.gz' && gunzip -f GeoLiteCity.dat.gz",
+    command => "wget -O GeoLiteCity.dat.gz 'http://geolite.maxmind.com/download/geoip/database/GeoLiteCity.dat.gz' && gunzip -f GeoLiteCity.dat.gz",
     cwd => $nx_geo_root,
     creates => "${nx_geo_root}/GeoLiteCity.dat",
     require => File[$nx_geo_root],
